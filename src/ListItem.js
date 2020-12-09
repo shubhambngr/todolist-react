@@ -5,11 +5,10 @@ function ListItem(props) {
     <div style={{ textAlign: "left" }}>
       <li
         className="list-item"
+        style={props.isChecked ? { textDecoration: "line-through" } : null}
         onClick={() => {
           props.onCheck(props.item, props.index, props.isChecked);
         }}
-        style={props.isChecked ? { textDecoration: "line-through" } : null}
-        key={props.index}
       >
         {props.item}
       </li>

@@ -5,29 +5,22 @@ import ListItem from "./ListItem";
 import Zoom from "@material-ui/core/Zoom";
 
 export default function App() {
-  const [listItems, setListItems] = useState([]);
+  const [uncheckedItems, setUncheckedItems] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);
   const [emptyInput, setEmptyInput] = useState(false);
 
   function addItem(addToChecked, inputValue) {
-    if (addToChecked === true) {
-      if (inputValue.trim() !== "") {
-        setCheckedItems((prevValue) => {
-          return [...prevValue, inputValue];
-        });
-        setEmptyInput(false);
-      } else {
-        setEmptyInput(true);
-      }
+    if (inputValue.trim() !== "") {
+      addToChecked
+        ? setCheckedItems((prevItems) => {
+            return [...prevItems, inputValue];
+          })
+        : setUncheckedItems((prevItems) => {
+            return [...prevItems, inputValue];
+          });
+      setEmptyInput(false);
     } else {
-      if (inputValue.trim() !== "") {
-        setListItems((prevValue) => {
-          return [...prevValue, inputValue];
-        });
-        setEmptyInput(false);
-      } else {
-        setEmptyInput(true);
-      }
+      setEmptyInput(true);
     }
   }
 
@@ -38,7 +31,7 @@ export default function App() {
             return index !== deleteIndex;
           });
         })
-      : setListItems((prevItems) => {
+      : setUncheckedItems((prevItems) => {
           return prevItems.filter((item, index) => {
             return index !== deleteIndex;
           });
@@ -58,8 +51,9 @@ export default function App() {
       <InputArea isEmpty={emptyInput} onAdd={addItem} />
       <div>
         <ul>
-          {listItems.map((item, index) => (
+          {uncheckedItems.map((item, index) => (
             <ListItem
+              key={index}
               onCheck={checkItem}
               isChecked={false}
               item={item}
@@ -75,15 +69,14 @@ export default function App() {
             <p>Checked Items</p>
             <ul>
               {checkedItems.map((item, index) => (
-                <Zoom in={true}>
-                  <ListItem
-                    onCheck={checkItem}
-                    isChecked={true}
-                    item={item}
-                    index={index}
-                    onDelete={deleteItem}
-                  />
-                </Zoom>
+                <ListItem
+                  key={index}
+                  onCheck={checkItem}
+                  isChecked={true}
+                  item={item}
+                  index={index}
+                  onDelete={deleteItem}
+                />
               ))}
             </ul>
           </div>
