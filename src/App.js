@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import InputArea from "./InputArea";
-import ToDoItem from "./ToDoItem";
+import ListItem from "./ListItem";
 
 export default function App() {
   const [listItems, setListItems] = useState([]);
@@ -34,7 +34,7 @@ export default function App() {
       <div>
         <ul>
           {listItems.map((item, index) => (
-            <ToDoItem item={item} index={index} onDelete={deleteItem} />
+            <ListItem item={item} index={index} onDelete={deleteItem} />
           ))}
         </ul>
       </div>
