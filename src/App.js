@@ -1,25 +1,19 @@
 import React, { useState } from "react";
 import "./App.css";
+import InputArea from "./InputArea";
+import ToDoItem from "./ToDoItem";
 
 export default function App() {
-  const [inputText, setInputText] = useState("");
   const [listItems, setListItems] = useState([]);
   const [emptyInput, setEmptyInput] = useState(false);
 
-  function handleInputChange(event) {
-    const value = event.target.value;
-    setInputText(value);
-  }
-
-  function addItem() {
-    if (inputText.trim() !== "") {
+  function addItem(inputValue) {
+    if (inputValue.trim() !== "") {
       setListItems((prevValue) => {
-        return [...prevValue, inputText];
+        return [...prevValue, inputValue];
       });
-      setInputText("");
       setEmptyInput(false);
     } else {
-      setInputText("");
       setEmptyInput(true);
     }
   }
@@ -31,43 +25,16 @@ export default function App() {
     setListItems(filteredListItems);
   }
 
-  function handleKeyPress(event) {
-    if (event.key === "Enter") {
-      addItem();
-    }
-  }
-
   return (
     <div className="container">
       <div className="heading">
         <h1>To Do List</h1>
       </div>
-      <div className="form">
-        <input
-          onKeyPress={handleKeyPress}
-          onChange={handleInputChange}
-          type="text"
-          value={inputText}
-          placeholder={emptyInput ? "Empty Entry!" : "Enter Item"}
-          autoFocus
-        />
-        <button onClick={addItem}>
-          <span>Add</span>
-        </button>
-      </div>
+      <InputArea isEmpty={emptyInput} onAdd={addItem} />
       <div>
         <ul>
           {listItems.map((item, index) => (
-            <li key={index}>
-              {item}
-              <button
-                value={index}
-                onClick={deleteItem}
-                style={{ float: "right" }}
-              >
-                Delete
-              </button>
-            </li>
+            <ToDoItem item={item} index={index} onDelete={deleteItem} />
           ))}
         </ul>
       </div>
