@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import InputArea from "./InputArea";
 import ListItem from "./ListItem";
+import Zoom from "@material-ui/core/Zoom";
 
 export default function App() {
   const [listItems, setListItems] = useState([]);
@@ -67,25 +68,27 @@ export default function App() {
             />
           ))}
         </ul>
-
-        {/* CHECKED ITEMS */}
-        {checkedItems.length !== 0 && (
+      </div>
+      {checkedItems.length !== 0 && (
+        <Zoom in={true}>
           <div className="checked-items">
             <p>Checked Items</p>
             <ul>
               {checkedItems.map((item, index) => (
-                <ListItem
-                  onCheck={checkItem}
-                  isChecked={true}
-                  item={item}
-                  index={index}
-                  onDelete={deleteItem}
-                />
+                <Zoom in={true}>
+                  <ListItem
+                    onCheck={checkItem}
+                    isChecked={true}
+                    item={item}
+                    index={index}
+                    onDelete={deleteItem}
+                  />
+                </Zoom>
               ))}
             </ul>
           </div>
-        )}
-      </div>
+        </Zoom>
+      )}
     </div>
   );
 }

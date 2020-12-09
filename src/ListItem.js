@@ -1,6 +1,6 @@
 import React from "react";
 
-function ToDoItem(props) {
+function ListItem(props) {
   return (
     <div style={{ textAlign: "left" }}>
       <li
@@ -26,4 +26,4 @@ function ToDoItem(props) {
   );
 }
 
-export default ToDoItem;
+export default ListItem;
