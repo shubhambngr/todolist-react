@@ -2,17 +2,26 @@ import React from "react";
 
 function ToDoItem(props) {
   return (
-    <div>
-      <li key={props.index}>
+    <div style={{ textAlign: "left" }}>
+      <li
+        className="list-item"
+        onClick={() => {
+          props.onCheck(props.item, props.index, props.isChecked);
+        }}
+        style={props.isChecked ? { textDecoration: "line-through" } : null}
+        key={props.index}
+      >
         {props.item}
-        <button
-          value={props.index}
-          onClick={props.onDelete}
-          style={{ float: "right" }}
-        >
-          Delete
-        </button>
       </li>
+      <button
+        className="delete-btn"
+        value={props.index}
+        onClick={() => {
+          props.onDelete(props.isChecked, props.index);
+        }}
+      >
+        Delete
+      </button>
     </div>
   );
 }

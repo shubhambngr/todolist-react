@@ -5,24 +5,48 @@ import ListItem from "./ListItem";
 
 export default function App() {
   const [listItems, setListItems] = useState([]);
+  const [checkedItems, setCheckedItems] = useState([]);
   const [emptyInput, setEmptyInput] = useState(false);
 
-  function addItem(inputValue) {
-    if (inputValue.trim() !== "") {
-      setListItems((prevValue) => {
-        return [...prevValue, inputValue];
-      });
-      setEmptyInput(false);
+  function addItem(addToChecked, inputValue) {
+    if (addToChecked === true) {
+      if (inputValue.trim() !== "") {
+        setCheckedItems((prevValue) => {
+          return [...prevValue, inputValue];
+        });
+        setEmptyInput(false);
+      } else {
+        setEmptyInput(true);
+      }
     } else {
-      setEmptyInput(true);
+      if (inputValue.trim() !== "") {
+        setListItems((prevValue) => {
+          return [...prevValue, inputValue];
+        });
+        setEmptyInput(false);
+      } else {
+        setEmptyInput(true);
+      }
     }
   }
 
-  function deleteItem(event) {
-    const deleteIndex = event.target.value;
-    listItems.splice(deleteIndex, 1);
-    const filteredListItems = listItems.filter((newItems) => newItems !== "");
-    setListItems(filteredListItems);
+  function deleteItem(isChecked, deleteIndex) {
+    isChecked
+      ? setCheckedItems((prevItems) => {
+          return prevItems.filter((item, index) => {
+            return index !== deleteIndex;
+          });
+        })
+      : setListItems((prevItems) => {
+          return prevItems.filter((item, index) => {
+            return index !== deleteIndex;
+          });
+        });
+  }
+
+  function checkItem(checkedItem, checkedIndex, isCrossed) {
+    deleteItem(isCrossed, checkedIndex);
+    addItem(!isCrossed, checkedItem);
   }
 
   return (
@@ -34,9 +58,33 @@ export default function App() {
       <div>
         <ul>
           {listItems.map((item, index) => (
-            <ListItem item={item} index={index} onDelete={deleteItem} />
+            <ListItem
+              onCheck={checkItem}
+              isChecked={false}
+              item={item}
+              index={index}
+              onDelete={deleteItem}
+            />
           ))}
         </ul>
+
+        {/* CHECKED ITEMS */}
+        {checkedItems.length !== 0 && (
+          <div className="checked-items">
+            <p>Checked Items</p>
+            <ul>
+              {checkedItems.map((item, index) => (
+                <ListItem
+                  onCheck={checkItem}
+                  isChecked={true}
+                  item={item}
+                  index={index}
+                  onDelete={deleteItem}
+                />
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

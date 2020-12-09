@@ -9,7 +9,7 @@ function InputArea(props) {
 
   function handleKeyPress(event) {
     if (event.key === "Enter") {
-      props.onAdd(inputText);
+      props.onAdd(false, inputText);
       setInputText("");
     }
   }
@@ -26,7 +26,7 @@ function InputArea(props) {
       />
       <button
         onClick={() => {
-          props.onAdd(inputText);
+          props.onAdd(false, inputText);
           setInputText("");
         }}
       >
