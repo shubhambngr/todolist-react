@@ -2,9 +2,8 @@ import React from "react";
 
 function ListItem(props) {
   return (
-    <div style={{ textAlign: "left" }}>
+    <div className="list-item">
       <li
-        className="list-item"
         style={props.isChecked ? { textDecoration: "line-through" } : null}
         onClick={() => {
           props.onCheck(props.item, props.index, props.isChecked);

@@ -49,7 +49,7 @@ export default function App() {
         <h1>To Do List</h1>
       </div>
       <InputArea isEmpty={emptyInput} onAdd={addItem} />
-      <div>
+      <div className="list">
         <ul>
           {uncheckedItems.map((item, index) => (
             <ListItem
@@ -62,26 +62,26 @@ export default function App() {
             />
           ))}
         </ul>
+        {checkedItems.length !== 0 && (
+          <Zoom in={true}>
+            <div className="checked-items">
+              <p>Checked Items</p>
+              <ul>
+                {checkedItems.map((item, index) => (
+                  <ListItem
+                    key={index}
+                    onCheck={checkItem}
+                    isChecked={true}
+                    item={item}
+                    index={index}
+                    onDelete={deleteItem}
+                  />
+                ))}
+              </ul>
+            </div>
+          </Zoom>
+        )}
       </div>
-      {checkedItems.length !== 0 && (
-        <Zoom in={true}>
-          <div className="checked-items">
-            <p>Checked Items</p>
-            <ul>
-              {checkedItems.map((item, index) => (
-                <ListItem
-                  key={index}
-                  onCheck={checkItem}
-                  isChecked={true}
-                  item={item}
-                  index={index}
-                  onDelete={deleteItem}
-                />
-              ))}
-            </ul>
-          </div>
-        </Zoom>
-      )}
     </div>
   );
 }

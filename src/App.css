@@ -1,6 +1,6 @@
 body {
   background-color: #ffeaa7;
-  min-height: 70vh;
+  min-height: 100%;
   padding: 1rem;
   box-sizing: border-box;
   display: flex;
@@ -12,12 +12,14 @@ body {
   font-size: 130%;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 .container {
   width: 100%;
-  height: auto;
-  min-height: 500px;
-  max-width: 500px;
-  min-width: 250px;
+  height: 90vh;
+  max-width: 80vw;
   background: #f1f5f8;
   background-image: radial-gradient(#bfc0c1 7.2%, transparent 0);
   background-size: 25px 25px;
@@ -25,6 +27,7 @@ body {
   box-shadow: 4px 3px 7px 2px #00000040;
   padding: 1rem;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .heading {
@@ -63,14 +66,19 @@ body {
   margin-top: 3rem;
 }
 
-.list-item,
-.delete-btn {
-  display: inline-block;
+.list {
+  height: calc(100% - 145px);
+  overflow-y: auto;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
 }
 
 .delete-btn {
-  float: right;
-  margin-top: 5%;
+  align-self: flex-start;
+  align-self: center;
 }
 
 button {
@@ -82,7 +90,6 @@ button {
   border-radius: 5px;
   background-color: #ffeaa7;
   border: none;
-  margin-left: 1rem;
 }
 
 button span {
